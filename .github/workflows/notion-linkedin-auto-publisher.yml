@@ -2,9 +2,11 @@ name: Notion to LinkedIn Auto-Publisher
 
 on:
   schedule:
-    # Exécution automatique toutes les 2h de 06h00 à 20h00 (Heure de Paris / UTC+1)
-    # En UTC : 05h00, 07h00, 09h00, 11h00, 13h00, 15h00, 17h00, 19h00
-    - cron: '0 5,7,9,11,13,15,17,19 * * *'
+    # Exécution automatique :
+    # - Toutes les 2 heures entre 06h00 et 14h00 (06h, 08h, 10h, 12h, 14h)
+    # - Toutes les heures de 14h00 à 20h00 pour couvrir pile les posts de 15h, 17h, 18h, 19h et 20h
+    # En UTC (Paris UTC+1) : 05:00, 07:00, 09:00, 11:00, 13:00, 14:00, 15:00, 16:00, 17:00, 18:00, 19:00
+    - cron: '0 5,7,9,11,13,14,15,16,17,18,19 * * *'
   workflow_dispatch: # Permet de déclencher la publication manuellement depuis l'interface GitHub Actions
 
 concurrency:
