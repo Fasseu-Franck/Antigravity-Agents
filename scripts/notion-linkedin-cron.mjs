@@ -138,7 +138,10 @@ async function getDuePostsFromNotion() {
   }
 
   if (futurePosts.length > 0) {
-    console.log(`\n⏳ Next scheduled post: "${futurePosts[0].title}" on ${futurePosts[0].scheduledDate}`);
+    console.log(`\n⏳ Scheduled pending posts (${futurePosts.length}):`);
+    for (const fp of futurePosts) {
+      console.log(`   - "${fp.title}" at ${fp.scheduledDate}`);
+    }
   }
 
   return duePosts;
