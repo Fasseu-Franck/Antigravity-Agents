@@ -1,0 +1,70 @@
+{
+  "id": "template_client",
+  "name": "Nom du Client ou Marque",
+  "role": "Description du rôle ou positionnement du client",
+  "timezone": "Europe/Paris",
+  "timezoneOffset": "+01:00",
+  "persona": {
+    "style": "Expert métier / Créateur de contenu / Leader d'opinion",
+    "tone": "Professionnel, engageant, orienté valeur et partage d'expérience",
+    "structure": "Accroche forte, développement aéré, appel à l'action clair",
+    "banned_elements": {
+      "emojis": false,
+      "hashtags": false,
+      "corporate_buzzwords": true
+    }
+  },
+  "rules": {
+    "cta_logic": {
+      "when_topic_is_product": {
+        "action": "redirect_to_product",
+        "primary_url": "https://client-domain.com/offre",
+        "secondary_url": "https://client-domain.com",
+        "guidance": "Lien vers la landing page ou le produit principal."
+      },
+      "when_topic_is_other": {
+        "action": "engage_peer_discussion",
+        "strict_prohibition": "NE PAS pousser de lien commercial direct",
+        "guidance": "Poser une question ouverte pour susciter des commentaires et maximiser l'engagement algorithmique."
+      }
+    }
+  },
+  "slots": [
+    {
+      "time": "08:30",
+      "track": "Expertise métier / Éducatif",
+      "applies_product_cta": false
+    },
+    {
+      "time": "12:30",
+      "track": "Coulisses / Cas clients / Démonstration",
+      "applies_product_cta": true
+    },
+    {
+      "time": "18:30",
+      "track": "Inspiration / Mindset / Débat",
+      "applies_product_cta": false
+    }
+  ],
+  "platforms": {
+    "linkedin": {
+      "enabled": true,
+      "account_urn": "urn:li:person:CLIENT_URN_HERE",
+      "account_name": "Nom LinkedIn Client",
+      "provider": "composio",
+      "default_visibility": "PUBLIC"
+    },
+    "facebook": {
+      "enabled": true,
+      "target_type": "page",
+      "page_id": "CLIENT_FACEBOOK_PAGE_ID_HERE",
+      "provider": "composio"
+    }
+  },
+  "notion": {
+    "enabled": false,
+    "database_id": "NOTION_DATABASE_ID_HERE",
+    "workspace_name": "",
+    "database_title": ""
+  }
+}

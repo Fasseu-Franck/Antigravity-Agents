@@ -1,0 +1,34 @@
+name: Notion to LinkedIn Auto-Publisher
+
+on:
+  schedule:
+    # Exécution automatique toutes les 15 minutes 24h/24 et 7j/7
+    - cron: '*/15 * * * *'
+  workflow_dispatch: # Permet de déclencher la publication manuellement depuis l'interface GitHub Actions
+
+concurrency:
+  group: notion-linkedin-publisher
+  cancel-in-progress: false
+
+jobs:
+  check-and-publish:
+    name: Surveillance Notion & Publication LinkedIn
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Cloner le repository
+        uses: actions/checkout@v4
+
+      - name: Configuration de Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Exécuter le script de publication
+        env:
+          COMPOSIO_API_KEY: ${{ secrets.COMPOSIO_API_KEY }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID || '346fb75f-5244-8082-abd6-ca783b5c4666' }}
+          LINKEDIN_AUTHOR_URN: ${{ secrets.LINKEDIN_AUTHOR_URN || 'urn:li:person:E0byz8Kzyo' }}
+        run: |
+          node scripts/notion-linkedin-cron.mjs

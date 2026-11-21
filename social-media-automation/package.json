@@ -1,0 +1,26 @@
+{
+  "name": "social-media-automation",
+  "version": "1.0.0",
+  "description": "Multi-profile, multi-platform automated social media posting and scheduling system (LinkedIn & Facebook) with Notion two-way sync.",
+  "main": "cli.js",
+  "type": "module",
+  "scripts": {
+    "cli": "node cli.js",
+    "sync": "node cli.js sync --profile Fasseu-Franck",
+    "export-local": "node cli.js export-local --profile Fasseu-Franck",
+    "publish-due": "node cli.js publish-due --profile Fasseu-Franck",
+    "status": "node cli.js status --profile Fasseu-Franck",
+    "create-client": "node cli.js create-client"
+  },
+  "keywords": [
+    "social-media",
+    "automation",
+    "linkedin",
+    "facebook",
+    "notion",
+    "scheduling",
+    "multi-client"
+  ],
+  "author": "Franck Fasseu (Onixe)",
+  "license": "MIT"
+}

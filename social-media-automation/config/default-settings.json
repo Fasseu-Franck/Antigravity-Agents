@@ -1,0 +1,24 @@
+{
+  "timezone": "Europe/Paris",
+  "timezoneOffset": "+01:00",
+  "defaultSlots": ["08:00", "12:00", "18:00"],
+  "composio": {
+    "mcpUrl": "https://connect.composio.dev/mcp",
+    "apiKey": "ck_jiTcUhCw5ZhBFiAHumBE"
+  },
+  "notion": {
+    "defaultDatabaseId": "346fb75f-5244-8082-abd6-ca783b5c4666",
+    "apiVersion": "2022-06-28"
+  },
+  "platforms": {
+    "linkedin": {
+      "maxCharacters": 3000,
+      "characterWarning": 2500,
+      "defaultVisibility": "PUBLIC"
+    },
+    "facebook": {
+      "maxCharacters": 5000,
+      "characterWarning": 4000
+    }
+  }
+}

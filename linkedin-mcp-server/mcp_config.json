@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "linkedin": {
+      "command": "node",
+      "args": [
+        "d:/GitHub/Antigravity-Agents/linkedin-mcp-server/dist/index.js"
+      ],
+      "env": {
+        "LINKEDIN_ACCESS_TOKEN": "YOUR_LINKEDIN_ACCESS_TOKEN",
+        "LINKEDIN_QUEUE_FILE": "d:/GitHub/Antigravity-Agents/linkedin-mcp-server/linkedin-queue.json"
+      }
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "id": "Fasseu-Franck",
+  "name": "Franck Fasseu",
+  "role": "Fondateur tech d'Onixe & Bâtisseur de produits numériques",
+  "timezone": "Europe/Paris",
+  "timezoneOffset": "+01:00",
+  "persona": {
+    "style": "Florent Ghizzoni / Bâtisseur dans les tranchées",
+    "tone": "Sobre, authentique, humble, radicalement pragmatique",
+    "structure": "Paragraphes courts (1-2 phrases), sauts de ligne réguliers, phrases de bascule isolées",
+    "banned_elements": {
+      "emojis": true,
+      "hashtags": true,
+      "corporate_buzzwords": true
+    }
+  },
+  "rules": {
+    "cta_logic": {
+      "when_topic_is_onixe": {
+        "action": "redirect_to_product",
+        "primary_url": "https://onixe.app/waitlist",
+        "secondary_url": "https://onixe.app",
+        "guidance": "Mentionner explicitement onixe.app ou la waitlist avec un appel sobre pour rejoindre l'accès anticipé ou tester le simulateur."
+      },
+      "when_topic_is_other": {
+        "action": "engage_peer_discussion",
+        "strict_prohibition": "NE PAS inclure de lien onixe.app ni mentionner la waitlist Onixe",
+        "guidance": "Terminer par une question ouverte ou binaire adressée aux pairs (devs, CTOs, créateurs) pour lancer la discussion technique ou méthodologique."
+      }
+    }
+  },
+  "slots": [
+    {
+      "time": "08:00",
+      "track": "Onixe / EdTech Vision",
+      "target_category": "Attraction",
+      "applies_onixe_cta": true
+    },
+    {
+      "time": "12:00",
+      "track": "Dev Niche / Bâtisseur IA (Antigravity, Google Suite, Next.js, Architecture)",
+      "target_category": "Positionnement",
+      "applies_onixe_cta": false
+    },
+    {
+      "time": "18:00",
+      "track": "Mindset / Veille IA / Conseils Bâtisseur",
+      "target_category": "Communication",
+      "applies_onixe_cta": false
+    }
+  ],
+  "platforms": {
+    "linkedin": {
+      "enabled": true,
+      "account_urn": "urn:li:person:E0byz8Kzyo",
+      "account_name": "Fasseu Franck",
+      "provider": "composio",
+      "default_visibility": "PUBLIC"
+    },
+    "facebook": {
+      "enabled": true,
+      "target_type": "page",
+      "page_id": "auto",
+      "provider": "composio"
+    }
+  },
+  "notion": {
+    "enabled": true,
+    "database_id": "346fb75f-5244-8082-abd6-ca783b5c4666",
+    "workspace_name": "Espace de franck. dev",
+    "database_title": "Content Hub"
+  }
+}

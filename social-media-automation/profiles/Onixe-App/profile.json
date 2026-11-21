@@ -1,0 +1,62 @@
+{
+  "id": "Onixe-App",
+  "name": "Onixe",
+  "role": "The Quiet OS for Modern Academies",
+  "timezone": "Europe/Paris",
+  "timezoneOffset": "+01:00",
+  "persona": {
+    "style": "Produit B2B EdTech / Minimaliste & Performant",
+    "tone": "Institutionnel moderne, précis, centré sur la valeur pédagogique et la métrique (94% rétention, 3s évaluation)",
+    "structure": "Clarté produit, démonstrations concrètes, mises à jour produit et retours clients",
+    "banned_elements": {
+      "emojis": false,
+      "hashtags": false
+    }
+  },
+  "rules": {
+    "cta_logic": {
+      "when_topic_is_onixe": {
+        "action": "redirect_to_product",
+        "primary_url": "https://onixe.app/waitlist",
+        "secondary_url": "https://onixe.app",
+        "guidance": "Inviter les directeurs d'académies et responsables de formation à tester la plateforme."
+      },
+      "when_topic_is_other": {
+        "action": "redirect_to_product",
+        "primary_url": "https://onixe.app",
+        "guidance": "Ramener l'actualité EdTech ou les statistiques de requalification (World Economic Forum) à la solution Onixe."
+      }
+    }
+  },
+  "slots": [
+    {
+      "time": "09:30",
+      "track": "Product Announcements & Case Studies",
+      "applies_onixe_cta": true
+    },
+    {
+      "time": "16:00",
+      "track": "EdTech Industry Insights & Pedagogical OS",
+      "applies_onixe_cta": true
+    }
+  ],
+  "platforms": {
+    "linkedin": {
+      "enabled": true,
+      "account_urn": "auto",
+      "account_name": "Onixe Official",
+      "provider": "composio",
+      "default_visibility": "PUBLIC"
+    },
+    "facebook": {
+      "enabled": true,
+      "target_type": "page",
+      "page_id": "auto",
+      "provider": "composio"
+    }
+  },
+  "notion": {
+    "enabled": false,
+    "database_id": ""
+  }
+}

@@ -1,0 +1,61 @@
+<evaluation>
+   <!-- 1. Format audit test: Character count analysis -->
+   <qa_pair>
+      <question>Use the linkedin_format_post tool to audit the text "Innovating with AI in 2026 #AI #Tech". How many hashtags does the tool detect? Respond with a single integer.</question>
+      <answer>2</answer>
+   </qa_pair>
+
+   <!-- 2. Format audit test: Bold conversion check -->
+   <qa_pair>
+      <question>Format the string "**Antigravity**" using the linkedin_format_post tool with convert_markdown set to true. Does the resulting cleanFormattedText contain standard ASCII asterisks? Respond True or False.</question>
+      <answer>False</answer>
+   </qa_pair>
+
+   <!-- 3. Format audit test: Cutoff risk inspection -->
+   <qa_pair>
+      <question>Audit a short 50-character single-line post using the linkedin_format_post tool. What is the cutoffRisk level assigned to its hook? Respond low, medium, or high.</question>
+      <answer>low</answer>
+   </qa_pair>
+
+   <!-- 4. Format audit test: Maximum characters allowed -->
+   <qa_pair>
+      <question>According to the linkedin_format_post tool output, what is the maximum character limit (maxCharacters) permitted for a LinkedIn post? Respond with a single integer.</question>
+      <answer>3000</answer>
+   </qa_pair>
+
+   <!-- 5. Queue status test: Empty queue structure -->
+   <qa_pair>
+      <question>Inspect the scheduled posts using linkedin_list_scheduled_posts filtering by status 'cancelled'. What is the count field returned in the structuredContent? Respond with an integer.</question>
+      <answer>0</answer>
+   </qa_pair>
+
+   <!-- 6. Format audit test: Call to action detection -->
+   <qa_pair>
+      <question>Audit the text "Partagez votre avis en commentaire ci-dessous 👇" using linkedin_format_post. Is hasCallToAction reported as True or False? Respond True or False.</question>
+      <answer>True</answer>
+   </qa_pair>
+
+   <!-- 7. Format audit test: CTA negative detection -->
+   <qa_pair>
+      <question>Audit the text "Architecture logicielle et benchmarks microservices." using linkedin_format_post. Is hasCallToAction reported as True or False? Respond True or False.</question>
+      <answer>False</answer>
+   </qa_pair>
+
+   <!-- 8. Resource check: Schema validation for empty text -->
+   <qa_pair>
+      <question>Attempting to call linkedin_format_post with an empty text argument ("") triggers an input validation error because the minimum string length required by the schema is what value? Respond with a single integer.</question>
+      <answer>1</answer>
+   </qa_pair>
+
+   <!-- 9. Format audit test: Excessive hashtags check -->
+   <qa_pair>
+      <question>Audit a post containing 7 hashtags: "#one #two #three #four #five #six #seven". Does the hashtags recommendations list advise reducing the hashtags to prevent algorithmic spam penalty? Respond True or False.</question>
+      <answer>True</answer>
+   </qa_pair>
+
+   <!-- 10. Format audit test: Optimal hook length threshold -->
+   <qa_pair>
+      <question>What is the maximum number of characters evaluated in the previewText before the fold by the hook analyzer in linkedin_format_post? Respond with a single integer.</question>
+      <answer>210</answer>
+   </qa_pair>
+</evaluation>

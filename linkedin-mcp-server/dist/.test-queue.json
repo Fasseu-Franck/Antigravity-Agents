@@ -1,0 +1,24 @@
+{
+  "version": "1.0.0",
+  "updatedAt": "2026-11-18T12:03:42.166Z",
+  "items": [
+    {
+      "id": "post_1795003377689_q319e",
+      "createdAt": "2026-11-18T12:02:57.689Z",
+      "scheduledTime": "2026-11-19T12:02:57.682Z",
+      "status": "cancelled",
+      "authorUrn": "",
+      "commentary": "Automated test post from MCP server #Automation #Test",
+      "visibility": "PUBLIC"
+    },
+    {
+      "id": "post_1795003422154_z8fqv",
+      "createdAt": "2026-11-18T12:03:42.154Z",
+      "scheduledTime": "2026-11-19T12:03:42.147Z",
+      "status": "cancelled",
+      "authorUrn": "",
+      "commentary": "Automated test post from MCP server #Automation #Test",
+      "visibility": "PUBLIC"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "mcpServers": {
+    "composio": {
+      "command": "node",
+      "args": [
+        "d:/GitHub/Antigravity-Agents/linkedin-mcp-server/composio-bridge.js"
+      ],
+      "env": {
+        "COMPOSIO_API_KEY": "ck_jiTcUhCw5ZhBFiAHumBE"
+      }
+    },
+    "linkedin-local": {
+      "command": "node",
+      "args": [
+        "d:/GitHub/Antigravity-Agents/linkedin-mcp-server/dist/index.js"
+      ],
+      "env": {
+        "LINKEDIN_QUEUE_FILE": "d:/GitHub/Antigravity-Agents/linkedin-mcp-server/linkedin-queue.json"
+      }
+    }
+  }
+}
