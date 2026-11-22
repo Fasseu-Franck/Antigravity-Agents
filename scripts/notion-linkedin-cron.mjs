@@ -19,51 +19,59 @@ const LINKEDIN_AUTHOR_URN = process.env.LINKEDIN_AUTHOR_URN || "urn:li:person:E0
 
 const isDryRun = process.argv.includes("--dry-run");
 
-// Helper to execute tools through Composio MCP
-async function callComposioTool(toolName, args) {
-  const req = {
-    jsonrpc: "2.0",
-    id: Date.now(),
-    method: "tools/call",
-    params: {
-      name: toolName,
-      arguments: args
-    }
-  };
-
-  const res = await fetch(COMPOSIO_MCP_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json, text/event-stream",
-      "x-consumer-api-key": COMPOSIO_API_KEY
-    },
-    body: JSON.stringify(req)
-  });
-
-  if (!res.ok) {
-    throw new Error(`Composio MCP returned HTTP ${res.status}: ${await res.text()}`);
-  }
-
-  const responseText = await res.text();
-  const lines = responseText.split("\n");
-  for (const line of lines) {
-    if (line.startsWith("data:")) {
-      const dataStr = line.slice(5).trim();
-      if (!dataStr) continue;
-      try {
-        const parsed = JSON.parse(dataStr);
-        const textContent = parsed.result?.content?.[0]?.text;
-        if (textContent) {
-          return JSON.parse(textContent);
+// Helper to execute tools through Composio MCP with retry
+async function callComposioTool(toolName, args, retries = 3) {
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      const req = {
+        jsonrpc: "2.0",
+        id: Date.now(),
+        method: "tools/call",
+        params: {
+          name: toolName,
+          arguments: args
         }
-      } catch (err) {
-        // continue parsing
+      };
+
+      const res = await fetch(COMPOSIO_MCP_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json, text/event-stream",
+          "x-consumer-api-key": COMPOSIO_API_KEY
+        },
+        body: JSON.stringify(req)
+      });
+
+      if (!res.ok) {
+        throw new Error(`Composio MCP returned HTTP ${res.status}: ${await res.text()}`);
       }
+
+      const responseText = await res.text();
+      const lines = responseText.split("\n");
+      for (const line of lines) {
+        if (line.startsWith("data:")) {
+          const dataStr = line.slice(5).trim();
+          if (!dataStr) continue;
+          try {
+            const parsed = JSON.parse(dataStr);
+            const textContent = parsed.result?.content?.[0]?.text;
+            if (textContent) {
+              return JSON.parse(textContent);
+            }
+          } catch (err) {
+            // continue parsing
+          }
+        }
+      }
+
+      throw new Error(`Failed to parse SSE response from Composio: ${responseText.slice(0, 300)}`);
+    } catch (err) {
+      if (attempt === retries) throw err;
+      console.warn(`      ⚠️ Attempt ${attempt}/${retries} failed (${err.message}). Retrying in 2s...`);
+      await new Promise(r => setTimeout(r, 2000));
     }
   }
-
-  throw new Error(`Failed to parse SSE response from Composio: ${responseText.slice(0, 300)}`);
 }
 
 async function getDuePostsFromNotion() {
@@ -149,12 +157,23 @@ async function getDuePostsFromNotion() {
 
 async function uploadImageToLinkedIn(imageUrl) {
   console.log(`      📥 Downloading image: ${imageUrl}`);
-  const imgRes = await fetch(imageUrl);
-  if (!imgRes.ok) {
-    throw new Error(`Failed to download image from ${imageUrl}: ${imgRes.statusText}`);
+  let buffer;
+  let contentType = "image/jpeg";
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      const imgRes = await fetch(imageUrl);
+      if (!imgRes.ok) {
+        throw new Error(`Failed to download image from ${imageUrl}: ${imgRes.statusText}`);
+      }
+      buffer = await imgRes.arrayBuffer();
+      contentType = imgRes.headers.get("content-type") || "image/jpeg";
+      break;
+    } catch (err) {
+      if (attempt === 3) throw err;
+      console.warn(`      ⚠️ Image download attempt ${attempt}/3 failed (${err.message}). Retrying in 2s...`);
+      await new Promise(r => setTimeout(r, 2000));
+    }
   }
-  const buffer = await imgRes.arrayBuffer();
-  const contentType = imgRes.headers.get("content-type") || "image/jpeg";
 
   console.log(`      📤 Registering image upload with LinkedIn...`);
   const regResult = await callComposioTool("COMPOSIO_PROXY_EXECUTE", {
@@ -179,17 +198,26 @@ async function uploadImageToLinkedIn(imageUrl) {
   }
 
   console.log(`      ⬆️ Uploading bytes to LinkedIn CDN (${buffer.byteLength} bytes)...`);
-  const putRes = await fetch(uploadUrl, {
-    method: "PUT",
-    headers: {
-      "Content-Type": contentType,
-      "media-type-family": "STILLIMAGE"
-    },
-    body: buffer
-  });
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      const putRes = await fetch(uploadUrl, {
+        method: "PUT",
+        headers: {
+          "Content-Type": contentType,
+          "media-type-family": "STILLIMAGE"
+        },
+        body: buffer
+      });
 
-  if (!putRes.ok && putRes.status !== 201) {
-    throw new Error(`LinkedIn image upload failed with status ${putRes.status}: ${await putRes.text()}`);
+      if (!putRes.ok && putRes.status !== 201) {
+        throw new Error(`LinkedIn image upload failed with status ${putRes.status}: ${await putRes.text()}`);
+      }
+      break;
+    } catch (err) {
+      if (attempt === 3) throw err;
+      console.warn(`      ⚠️ Image upload attempt ${attempt}/3 failed (${err.message}). Retrying in 2s...`);
+      await new Promise(r => setTimeout(r, 2000));
+    }
   }
 
   console.log(`      ✅ Image successfully uploaded! Asset URN: ${assetUrn}`);
